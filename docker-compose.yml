@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+    postgres:
+        image: postgres
+        environment:
+            POSTGRES_PASSWORD: pass
+            POSTGRES_USER: user
+            POSTGRES_DB: test_db
+    app:
+        depends_on:
+            - postgres
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        volumes:
+            - /app/node_modules
+            - ./:/app
+        environment:
+            PORT: 3000
+        ports:
+            - "3000:3000"
